@@ -120,5 +120,6 @@ echo 'rm -r ../'$fold_name > uninstall.sh
 echo 'rm ~/Desktop/UT99.desktop'
 echo 'rm ~/.local/share/applications/UT99.desktop'
 mv uninstall.sh ./$fold_name
+echo -e '\xE2\x9C\x94 Uninstalling script created'
 
 echo -e '\xE2\x9C\x94 Installation completed, execute '$fold_name'/System'$system_suffix'/ut-bin-'$arc_suffix' to play'
