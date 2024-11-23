@@ -42,7 +42,7 @@ setVariables() {
 # Unreal tournament files from Archive.org
 getUTFiles() {
 	echo 'Downloading UT99 files...'
-	wget -nv --show-progress 'https://archive.org/download/unreal-tournament-	complete/Unreal%20Tournament.zip'
+	wget -nv --show-progress 'https://archive.org/download/unreal-tournament-complete/Unreal%20Tournament.zip'
 	echo -e '\xE2\x9C\x94 UT99 files downloaded'
 
 	echo 'Extracting files...'
