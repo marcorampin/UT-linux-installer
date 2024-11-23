@@ -9,6 +9,12 @@ checkDependencies() {
 			echo 'coreutils missing'
 			exit 0
 		fi
+		if pacman -Q jq &>/dev/null; then
+			echo -e '\xE2\x9C\x94 jq'
+		else
+			echo 'jq missing'
+			exit 0
+		fi
 		if pacman -Q tar &>/dev/null; then
 			echo -e '\xE2\x9C\x94 tar'
 		else
@@ -34,11 +40,8 @@ setVariables() {
 	curr_path=$(pwd)
 	fold_name='Unreal_tournament'
 	zip_name='unreal_tournament.zip'
-	patch_ver='469d'
-	tar_name='patch'$patch_ver'.tar.bz2'
 	ut99_zip=./$zip_name
-	patch_tar=./$fold_name/$tar_name 
-	architecture=$(uname -m)
+	latest_release='https://api.github.com/repos/OldUnreal/UnrealTournamentPatches/releases/latest'
 }
 
 # Unreal tournament files from Archive.org
@@ -55,28 +58,54 @@ getUTFiles() {
 }
 
 # Patch 469d
-getPatch() {
-	echo 'Downloading '$patch_ver' patch...'
-	if [[ $architecture == 'x86_64' ]]; then
-    	arc_suffix='amd64'
-    	system_suffix='64'
-	elif [[ $architecture == 'arm64' ]]; then
-    	arc_suffix='arm64'
-    	system_suffix='ARM64'
-	elif [[ $architecture == 'i686' ]]; then
-    	arc_suffix='x86'
-    	system_suffix=''
-	else
-    	echo 'Unknown architecture'
-    	exit 0
-	fi
+getLatestRelease() {
+	echo 'Downloading latest patch release list...'
+	wget -q -O patch_latest $latest_release
+	patch_ver=$(cat ./patch_latest | jq -r '.tag_name')
+	echo -e '\xE2\x9C\x94 Release list downloaded'
+}
 
-	wget -P ./$fold_name -nv --show-progress 'https://github.com/OldUnreal/UnrealTournamentPatches/releases/download/v'$patch_ver'/OldUnreal-UTPatch'$patch_ver'-Linux-'$arc_suffix'.tar.bz2'
+getArchitecture() {
+	case $(uname -m) in
+		x86_64)
+    		arc_suffix='amd64'
+    		system_suffix='64'
+    		url_download=$(cat ./patch_latest | jq -r '.assets[0].browser_download_url')
+    		;;
+    	aarch64)
+    		arc_suffix='arm64'
+    		system_suffix='ARM64'
+    		url_download=$(cat ./patch_latest | jq -r '.assets[1].browser_download_url')
+    		;;
+		i386)
+			arc_suffix='x86'
+    		system_suffix=''
+    		url_download=$(cat ./patch_latest | jq -r '.assets[2].browser_download_url')
+			;;
+    	i686)
+    		arc_suffix='x86'
+    		system_suffix=''
+    		url_download=$(cat ./patch_latest | jq -r '.assets[2].browser_download_url')
+    		;;
+    	*)
+    		echo 'Unknown architecture'
+    		exit 0
+    		;; 	
+	esac
+}
+
+getPatch() {
+	getLatestRelease
+	getArchitecture
+	echo 'Downloading patch '$patch_ver
+	wget -P ./$fold_name -nv --show-progress $url_download
 	echo -e '\xE2\x9C\x94 Patch downloaded'
 
 	echo 'Extracting and adding patch...'
-	mv ./$fold_name/*.tar.bz2 ./$fold_name/$tar_name
+	patch_tar=./$fold_name/'patch'$patch_ver'.tar.bz2'
+	mv ./$fold_name/*.tar.bz2 $patch_tar
 	tar -xf $patch_tar -C ./$fold_name/ --overwrite
+	rm ./patch_latest
 	echo -e '\xE2\x9C\x94 Patch added'
 }
 

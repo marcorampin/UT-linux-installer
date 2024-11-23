@@ -3,6 +3,7 @@
 Dependencies:
 - bash
 - coreutils
+- jq
 - tar
 - unzip
 - wget
