@@ -1,8 +1,18 @@
 # ut-linux-installer
 To do:
-- Check system (amd64, arm64, x86) and download correct patch
-- get current path and make Unreal Tournament folder (download in it the files)
-- unzip UT and patch files, then move patch files within UT
-- remove windows files (.dll & .exe) from System folder
-- ask if .desktop and .appmenu links need to be made
-- print steps when performed and file to execute to play at the end
+- download files												V
+- unzip UT and patch files, then merge them in separate folder 	V
+- remove windows files (.dll & .exe) from System folder			V
+- remove compressed files										V
+
+Extra:
+- check if dependencies are installed
+- check system (amd64, arm64, x86) and download the correct patch
+- print statement for each started and completed step
+- ask if .desktop and .appmenu links need to be created
+- say which file needs to be executed to start the game
+
+Dependencies:
+wget
+unzip
+tar
