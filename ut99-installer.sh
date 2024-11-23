@@ -6,10 +6,10 @@ if [ $( grep -c 'Arch Linux' /etc/os-release ) -gt 0 ]; then
 		echo 'coreutils missing'
 		exit 0
 	fi
-	if pacman -Q wget &>/dev/null; then
-		echo -e '\xE2\x9C\x94 wget'
+	if pacman -Q tar &>/dev/null; then
+		echo -e '\xE2\x9C\x94 tar'
 	else
-		echo 'wget missing'
+		echo 'tar missing'
 		exit 0
 	fi
 	if pacman -Q unzip &>/dev/null; then
@@ -18,10 +18,10 @@ if [ $( grep -c 'Arch Linux' /etc/os-release ) -gt 0 ]; then
 		echo 'unzip missing'
 		exit 0
 	fi
-	if pacman -Q tar &>/dev/null; then
-		echo -e '\xE2\x9C\x94 tar'
+	if pacman -Q wget &>/dev/null; then
+		echo -e '\xE2\x9C\x94 wget'
 	else
-		echo 'tar missing'
+		echo 'wget missing'
 		exit 0
 	fi
 fi
