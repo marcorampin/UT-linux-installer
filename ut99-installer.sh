@@ -37,7 +37,7 @@ architecture=$(uname -m)
 
 # Unreal tournament files from Archive.org
 echo 'Downloading UT99 files...'
-wget -nv 'https://archive.org/download/unreal-tournament-complete/Unreal%20Tournament.zip'
+wget -nv --show-progress 'https://archive.org/download/unreal-tournament-complete/Unreal%20Tournament.zip'
 echo -e '\xE2\x9C\x94 UT99 files downloaded'
 
 echo 'Extracting files...'
@@ -61,7 +61,7 @@ else
     echo 'Unknown architecture'
     exit 0
 fi
-wget -P ./$fold_name -nv 'https://github.com/OldUnreal/UnrealTournamentPatches/releases/download/v'$patch_ver'/OldUnreal-UTPatch'$patch_ver'-Linux-'$arc_suffix'.tar.bz2'
+wget -P ./$fold_name -nv --show-progress 'https://github.com/OldUnreal/UnrealTournamentPatches/releases/download/v'$patch_ver'/OldUnreal-UTPatch'$patch_ver'-Linux-'$arc_suffix'.tar.bz2'
 echo -e '\xE2\x9C\x94 Patch downloaded'
 
 echo 'Extracting and adding patch...'
