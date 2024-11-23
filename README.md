@@ -1,6 +1,7 @@
 # ut99-linux-installer
 
 Dependencies:
+- bash
 - coreutils
 - tar
 - unzip

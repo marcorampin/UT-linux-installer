@@ -1,6 +1,12 @@
 checkDependencies() {
 	echo 'Checking dependencies...'
 	if [ $( grep -c 'Arch Linux' /etc/os-release ) -gt 0 ]; then
+		if pacman -Q bash &>/dev/null; then
+			echo -e '\xE2\x9C\x94 bash'
+		else
+			echo 'bash missing'
+			exit 0
+		fi
 		if pacman -Q coreutils &>/dev/null; then
 			echo -e '\xE2\x9C\x94 coreutils'
 		else
@@ -92,7 +98,6 @@ addLinks() {
 	read -r app_entry
 
 	if [[ $desktop_entry =~ ^[Yy]$ || $app_entry =~ ^[Yy]$ ]]; then
-    	# Create desktop entry
     	echo 'Creating entry...'
     	echo '[Desktop Entry]' > UT99.desktop
     	echo 'Version=469d' >> UT99.desktop
@@ -105,7 +110,6 @@ addLinks() {
 	    echo 'Categories=ApplicationCategory;' >> UT99.desktop
 	    chmod +x UT99.desktop
 
-	    # Move the desktop entry to the appropriate directory
 	    if [[ $desktop_entry =~ ^[Yy]$ ]]; then
 	    	cp UT99.desktop ~/Desktop/
 	    	echo -e '\xE2\x9C\x94 .desktop entry created'
