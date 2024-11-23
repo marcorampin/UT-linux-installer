@@ -1,12 +1,8 @@
+#!/bin/bash
+
 checkDependencies() {
 	echo 'Checking dependencies...'
 	if [ $( grep -c 'Arch Linux' /etc/os-release ) -gt 0 ]; then
-		if pacman -Q bash &>/dev/null; then
-			echo -e '\xE2\x9C\x94 bash'
-		else
-			echo 'bash missing'
-			exit 0
-		fi
 		if pacman -Q coreutils &>/dev/null; then
 			echo -e '\xE2\x9C\x94 coreutils'
 		else
@@ -92,10 +88,15 @@ deleteWinFiles() {
 }
 
 addLinks() {
-	echo 'Add a .desktop entry? (y/n)'
-	read -r desktop_entry
-	echo 'Add a menu entry? (y/n)'
-	read -r app_entry
+	read -p 'Add a .desktop entry?(Y/n) ' desktop_entry
+	read -p 'Add a menu entry?(Y/n) ' app_entry
+	
+	if [[ -z $desktop_entry ]]; then
+    	desktop_entry='y'
+	fi
+	if [[ -z $app_entry ]]; then
+    	app_entry='y'
+	fi
 
 	if [[ $desktop_entry =~ ^[Yy]$ || $app_entry =~ ^[Yy]$ ]]; then
     	echo 'Creating entry...'
@@ -124,8 +125,11 @@ addLinks() {
 }
 
 deleteDownFiles() {
-	echo 'Delete downloaded files? (y/n)'
-	read -r del_download
+	read -p 'Delete downloaded files?(Y/n) ' del_download
+	
+	if [[ -z $del_download ]]; then
+    	del_download='y'
+	fi
 
 	if [[ $del_download =~ ^[Yy]$ ]]; then
 		echo 'Deleting downloaded files...'
