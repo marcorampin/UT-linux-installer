@@ -1,24 +1,29 @@
 # ut99-linux-installer
 
-Dependencies:
-- bash
-- coreutils
-- jq
-- tar
-- unzip
-- wget
+Welcome! You are about to begin the installation of Unreal Tournament GOTY Edition.
 
-To do:
-- [X] download files
-- [X] unzip UT and patch files, then merge them in separate folder
-- [X] remove windows files (.dll & .exe) from System folder
-- [X] remove compressed files
+This game requires 1.3 GB of disk space for setup.
 
-Extra:
-- [X] check if dependencies are installed
-- [X] check system (amd64, arm64, x86) and download the correct patch
-- [X] print statement for each started and completed step
-- [X] ask if .desktop and .appmenu links need to be created
-- [X] ask if compressed folders need to be deleted
-- [X] say which file needs to be executed to start the game
-- [X] create uninstall script
+Game data and patches will be downloaded from the Internet.
+
+The installer will apply the latest community patch.
+
+Copy the script in the path where you want to keep your game files.
+
+The script can be both executed with terminal or without terminal (double-click).
+The first case permits to:
+	1) visually see the progression of the installation;
+	2) decide wether to create .desktop and application entries;
+	3) delete the downloaded files (game and patch files).
+The second instead automatically decides to create .desktop and and application entries and to delete the downloaded files. There are no messages of completed installation (aside from those signals).
+
+The installation also creates an uninstall script that removes the whole game folder and the .desktop and application entries.
+
+NOTICE
+The script has the following dependencies (on arch linux it checks if they are installed):
+	- bash (didn't test with other shells)
+	- coreutils
+	- jq
+	- tar
+	- unzip
+	- wget
